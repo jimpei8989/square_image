@@ -27,5 +27,7 @@ class Wrapper:
         self.square_single(input_path, output_path)
 
     def process_batch(self, input_path, output_path):
-        raise NotImplementedError()
+        for img in filter(lambda f: f.suffix == ".jpg", input_path.iterdir()):
+            print(f"I - processing {img}")
+            self.square_single(img, f"{output_path}/{img.name}")
 

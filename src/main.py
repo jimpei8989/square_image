@@ -31,7 +31,7 @@ def parse_args():
     def parse_int_or_percent(input_str: str):
         if (ret := parse_percentage(input_str)) is not None:
             return ret
-        elif (ret := parse_integer(input_str)) is not None:
+        elif (ret := parse_int(input_str)) is not None:
             return ret
         else:
             raise ValueError(f"Cannot parse padding {input_str}")
@@ -55,7 +55,7 @@ def parse_args():
     # Background
     parser.add_argument("-m", "--method", choices=("color", "blur"), default="blur")
     parser.add_argument("-c", "--color", type=getrgb)
-    parser.add_argument("-r", "--blur_radius", type=parse_int_or_percent, default=0.025)
+    parser.add_argument("-r", "--blur_radius", type=parse_int_or_percent, default=0.1)
 
     # Image
     parser.add_argument("--min_padding", type=parse_int_or_percent, default=0)
@@ -76,17 +76,16 @@ def main(args):
         wrapper.process_single(args.input_path, args.output_path)
 
     elif args.task == "batch":
-        if not input_path.is_dir():
+        if not args.input_path.is_dir():
             raise FileNotFoundError("E - input_dir is not a directory")
 
-        if not output_path.exists():
-            print(f"I - Creating dir for output dir {output_path}...")
-            output_path.mkdir(parents=True)
-        elif output_path.is_dir():
-            print(f"W - {output_path} exists")
+        if not args.output_path.exists():
+            print(f"I - Creating dir for output dir {args.output_path}...")
+            args.output_path.mkdir(parents=True)
+        elif args.output_path.is_dir():
+            print(f"W - {args.output_path} exists")
         else:
             raise ValueError("E - Output dir {output_dir} is not a directory, aborting...")
-
         wrapper.process_batch(args.input_path, args.output_path)
 
 main(parse_args())

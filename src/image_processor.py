@@ -41,6 +41,6 @@ class ImageProcessor:
         output_img.paste(img, box=(left, upper))
 
         if self.fixed_output_resolution is not None:
-            output_img.resize(self.output_resolution)
+            output_img = output_img.resize(self.fixed_output_resolution)
         return output_img
 
