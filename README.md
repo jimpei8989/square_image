@@ -29,7 +29,7 @@ python3 src/main.py batch \
 #### Blur (default)
 
 - `-r/--blur_radius` - specify the radius used to blur the image.
-    - default color is white
+    - default radius is 0.1
     - Can be either `int` or `float`:
         - `int`: define the radius
         - `float`: the radius is calculated by _max(width, height) * the ratio_
